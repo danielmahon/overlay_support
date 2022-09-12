@@ -10,7 +10,6 @@ import 'overlay_keys.dart';
 import 'overlay_state_finder.dart';
 
 part 'overlay_animation.dart';
-
 part 'overlay_entry.dart';
 
 /// To build a widget with animated value.
@@ -18,8 +17,7 @@ part 'overlay_entry.dart';
 ///
 /// A simple use case is [TopSlideNotification] in [showOverlayNotification].
 ///
-typedef AnimatedOverlayWidgetBuilder = Widget Function(
-    BuildContext context, double progress);
+typedef AnimatedOverlayWidgetBuilder = Widget Function(BuildContext context, double progress, Widget? child);
 
 /// Basic api to show overlay widget.
 ///
@@ -51,6 +49,7 @@ typedef AnimatedOverlayWidgetBuilder = Widget Function(
 ///
 OverlaySupportEntry showOverlay(
   AnimatedOverlayWidgetBuilder builder, {
+  Widget? child,
   Curve? curve,
   Duration? duration,
   Key? key,
@@ -89,19 +88,18 @@ OverlaySupportEntry showOverlay(
       key: overlayKey,
       child: _AnimatedOverlay(
         key: stateKey,
+        child: child,
         builder: builder,
         curve: curve,
         animationDuration: animationDuration ?? kNotificationSlideDuration,
-        reverseAnimationDuration:
-            reverseAnimationDuration ?? kNotificationSlideDuration,
+        reverseAnimationDuration: reverseAnimationDuration ?? kNotificationSlideDuration,
         duration: duration ?? kNotificationDuration,
         overlayKey: overlayKey,
         overlaySupportState: overlaySupport,
       ),
     );
   });
-  final supportEntry = OverlaySupportEntry._internal(
-      entry, overlayKey, stateKey, overlaySupport);
+  final supportEntry = OverlaySupportEntry._internal(entry, overlayKey, stateKey, overlaySupport);
   overlaySupport.addEntry(supportEntry, key: overlayKey);
   overlay.insert(entry);
   return supportEntry;

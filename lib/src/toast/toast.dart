@@ -21,15 +21,14 @@ class Toast {
 /// [duration] : the duration to show a toast,
 /// for most situation, you can use [Toast.LENGTH_SHORT] and [Toast.LENGTH_LONG]
 ///
-void toast(String message,
-    {Duration duration = Toast.LENGTH_SHORT, BuildContext? context}) {
+void toast(String message, {Duration duration = Toast.LENGTH_SHORT, BuildContext? context}) {
   if (duration <= Duration.zero) {
     //fast fail
     return;
   }
 
   showOverlay(
-    (context, t) {
+    (context, t, child) {
       return Opacity(opacity: t, child: _Toast(content: Text(message)));
     },
     curve: Curves.ease,
@@ -50,8 +49,7 @@ class _Toast extends StatelessWidget {
     return SafeArea(
       maintainBottomViewPadding: true,
       child: Padding(
-        padding:
-            EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+        padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
         child: DefaultTextStyle(
           style: TextStyle(color: toastTheme?.textColor),
           child: Padding(
@@ -62,8 +60,7 @@ class _Toast extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
                 child: Container(
                   color: toastTheme?.background,
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                  padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                   child: content,
                 ),
               ),

@@ -19,7 +19,7 @@ OverlaySupportEntry showOverlayNotification(
 }) {
   duration ??= kNotificationDuration;
   return showOverlay(
-    (context, t) {
+    (context, t, child) {
       var alignment = MainAxisAlignment.start;
       if (position == NotificationPosition.bottom) {
         alignment = MainAxisAlignment.end;
@@ -92,8 +92,8 @@ OverlaySupportEntry showSimpleNotification(
    */
   DismissDirection? slideDismissDirection,
 }) {
-  final dismissDirection = slideDismissDirection ??
-      (slideDismiss ? DismissDirection.horizontal : DismissDirection.none);
+  final dismissDirection =
+      slideDismissDirection ?? (slideDismiss ? DismissDirection.horizontal : DismissDirection.none);
   final entry = showOverlayNotification(
     (context) {
       return SlideDismissible(
@@ -106,10 +106,8 @@ OverlaySupportEntry showSimpleNotification(
               bottom: position == NotificationPosition.bottom,
               top: position == NotificationPosition.top,
               child: ListTileTheme(
-                textColor:
-                    foreground ?? Theme.of(context).colorScheme.onSecondary,
-                iconColor:
-                    foreground ?? Theme.of(context).colorScheme.onSecondary,
+                textColor: foreground ?? Theme.of(context).colorScheme.onSecondary,
+                iconColor: foreground ?? Theme.of(context).colorScheme.onSecondary,
                 child: ListTile(
                   leading: leading,
                   title: content,

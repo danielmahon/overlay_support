@@ -3,8 +3,7 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:overlay_support/overlay_support.dart';
 
-final GlobalKey<OverlaySupportState> _keyFinder =
-    GlobalKey(debugLabel: 'overlay_support');
+final GlobalKey<OverlaySupportState> _keyFinder = GlobalKey(debugLabel: 'overlay_support');
 
 OverlaySupportState? findOverlayState({BuildContext? context}) {
   if (context == null) {
@@ -33,8 +32,7 @@ OverlaySupportState? findOverlayState({BuildContext? context}) {
     }());
     return state;
   }
-  final overlaySupportState =
-      context.findAncestorStateOfType<OverlaySupportState>();
+  final overlaySupportState = context.findAncestorStateOfType<OverlaySupportState>();
   return overlaySupportState;
 }
 
@@ -73,11 +71,8 @@ class OverlaySupport extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return OverlaySupportTheme(
-      toastTheme:
-          toastTheme ?? OverlaySupportTheme.toast(context) ?? ToastThemeData(),
-      child: global
-          ? _GlobalOverlaySupport(child: child)
-          : _LocalOverlaySupport(child: child),
+      toastTheme: toastTheme ?? OverlaySupportTheme.toast(context) ?? ToastThemeData(),
+      child: global ? _GlobalOverlaySupport(child: child) : _LocalOverlaySupport(child: child),
     );
   }
 }
@@ -97,15 +92,12 @@ class _GlobalOverlaySupport extends StatefulWidget {
   _GlobalOverlaySupportState createState() => _GlobalOverlaySupportState();
 }
 
-class _GlobalOverlaySupportState
-    extends OverlaySupportState<_GlobalOverlaySupport> {
+class _GlobalOverlaySupportState extends OverlaySupportState<_GlobalOverlaySupport> {
   @override
   Widget build(BuildContext context) {
     assert(() {
-      if (context.findAncestorWidgetOfExactType<_GlobalOverlaySupport>() !=
-          null) {
-        throw FlutterError(
-            'There is already an OverlaySupport.global in the Widget tree.');
+      if (context.findAncestorWidgetOfExactType<_GlobalOverlaySupport>() != null) {
+        throw FlutterError('There is already an OverlaySupport.global in the Widget tree.');
       }
       return true;
     }());
@@ -127,8 +119,7 @@ class _GlobalOverlaySupportState
 
     context.visitChildElements(visitor);
 
-    assert(navigator != null,
-        '''It looks like you are not using Navigator in your app.
+    assert(navigator != null, '''It looks like you are not using Navigator in your app.
          
          do you wrapped you app widget like this?
          
@@ -156,8 +147,7 @@ class _LocalOverlaySupport extends StatefulWidget {
   _LocalOverlaySupportState createState() => _LocalOverlaySupportState();
 }
 
-class _LocalOverlaySupportState
-    extends OverlaySupportState<_LocalOverlaySupport> {
+class _LocalOverlaySupportState extends OverlaySupportState<_LocalOverlaySupport> {
   final GlobalKey<OverlayState> _overlayStateKey = GlobalKey();
 
   @override
